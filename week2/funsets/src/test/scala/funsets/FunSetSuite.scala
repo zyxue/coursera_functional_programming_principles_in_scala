@@ -29,10 +29,10 @@ class FunSetSuite extends FunSuite {
   /**
    * Tests are written using the "test" operator and the "assert" method.
    */
-  // test("string take") {
-  //   val message = "hello, world"
-  //   assert(message.take(5) == "hello")
-  // }
+  test("string take") {
+    val message = "hello, world"
+    assert(message.take(5) == "hello")
+  }
 
   /**
    * For ScalaTest tests, there exists a special equality operator "===" that
@@ -43,9 +43,9 @@ class FunSetSuite extends FunSuite {
    * Try it out! Change the values so that the assertion fails, and look at the
    * error message.
    */
-  // test("adding ints") {
-  //   assert(1 + 2 === 3)
-  // }
+  test("adding ints") {
+    assert(1 + 2 === 3)
+  }
 
 
   import FunSets._
@@ -110,5 +110,54 @@ class FunSetSuite extends FunSuite {
     }
   }
 
+  test("intersect elements of two sets") {
+    new TestSets {
+      val sa = union(s1, s2)
+      val sb = union(s2, s3)
+      val s = intersect(sa, sb)
+      assert(!contains(s, 1), "not have 1")
+      assert(contains(s, 2), "has 2")
+      assert(!contains(s, 3), "not have 3")
+    }
+  }
 
+  test("diff elements of two sets, returns elements in the first set, but not in the second set ") {
+    new TestSets {
+      val sa = union(s1, s2)
+      val sb = union(s2, s3)
+      assert(contains(diff(sa, sb), 1), "has 1")
+      assert(!contains(diff(sa, sb), 2), "not have 2")
+      assert(contains(diff(sb, sa), 3), "has 3")
+      assert(!contains(diff(sb, sa), 2), "not have 2")
+    }
+  }
+
+  test("filtering ") {
+    new TestSets {
+      val sa = union(s1, s2)
+      assert(!contains(filter(sa, x => x % 2 == 0), 1), "doesn't have 1")
+      assert(contains(filter(sa, x => x % 2 == 0), 2), "has 2")
+    }
+  }
+
+  test("forall") {
+    new TestSets {
+      val sa = union(s1, s2)
+      assert(forall(sa, x => x > 0), "for all of 1 and 2 are larger than 0")
+    }
+  }
+
+  test("exists") {
+    new TestSets {
+      val sa = union(s1, s2)
+      assert(exists(sa, x => x > 1), "exists 2 are larger than 1")
+    }
+  }
+
+  test("map") {
+    new TestSets {
+      val sa = union(s1, s2)
+      assert(contains(map(sa, x => x * x), 4), "4 in set after map ")
+    }
+  }
 }
