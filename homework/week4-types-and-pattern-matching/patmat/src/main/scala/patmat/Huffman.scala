@@ -327,6 +327,7 @@ object Huffman {
 
   // Part 4b: Encoding using code table
 
+  type Code = (Char, List[Bit])
   type CodeTable = List[(Char, List[Bit])]
 
   /**
