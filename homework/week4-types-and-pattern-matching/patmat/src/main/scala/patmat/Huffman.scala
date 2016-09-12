@@ -300,7 +300,25 @@ object Huffman {
     * a valid code tree that can be represented as a code table. Using the code tables of the
     * sub-trees, think of how to build the code table for the entire tree.
     */
-  def convert(tree: CodeTree): CodeTable = ???
+  def convert(tree: CodeTree): CodeTable = {
+
+    var res = List[(Char, List[Bit])]()
+    def func(subtree: CodeTree, bits: List[Bit] ): (Char, List[Bit]) = subtree match {
+      case Leaf (c, weight) => {
+        res = res ::: List((c, bits))
+        (c, bits)
+      }
+
+      case Fork (left, right, cs, weight) => {
+        func(left, bits ::: List (0) )
+        func(right, bits ::: List (1) )
+      }
+    }
+
+    func(tree, List[Bit]())
+
+    res
+  }
 
   /**
     * This function takes two code tables and merges them into one. Depending on how you
