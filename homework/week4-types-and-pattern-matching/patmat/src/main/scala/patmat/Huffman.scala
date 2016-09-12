@@ -18,21 +18,28 @@ object Huffman {
    * present in the leaves below it. The weight of a `Fork` node is the sum of the weights of these
    * leaves.
    */
-    abstract class CodeTree
+  abstract class CodeTree
   case class Fork(left: CodeTree, right: CodeTree, chars: List[Char], weight: Int) extends CodeTree
   case class Leaf(char: Char, weight: Int) extends CodeTree
   
 
   // Part 1: Basics
-    def weight(tree: CodeTree): Int = ??? // tree match ...
+
+  // use pattern matching
+  def weight(tree: CodeTree): Int = tree match {
+    case Fork(left, right, chars, weight) => weight
+    case Leaf(char, weight) => weight
+  }
   
-    def chars(tree: CodeTree): List[Char] = ??? // tree match ...
-  
+  def chars(tree: CodeTree): List[Char] = tree match {
+    case Fork(left, right, chars, weight) => chars
+    case Leaf(char, weight) => List(char)
+  }
+
   def makeCodeTree(left: CodeTree, right: CodeTree) =
     Fork(left, right, chars(left) ::: chars(right), weight(left) + weight(right))
 
-
-
+  
   // Part 2: Generating Huffman trees
 
   /**
