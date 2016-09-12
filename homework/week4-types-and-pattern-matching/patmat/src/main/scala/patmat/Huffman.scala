@@ -113,7 +113,15 @@ object Huffman {
    * head of the list should have the smallest weight), where the weight
    * of a leaf is the frequency of the character.
    */
-    def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = ???
+    def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = {
+      val freqsSorted = freqs.sortBy(_._2)
+      var res = List[Leaf]()
+      for (p <- freqsSorted) {
+        res = res ::: List(Leaf(p._1, p._2))
+      }
+
+      res
+    }
   
   /**
    * Checks whether the list `trees` contains only one single code tree.
