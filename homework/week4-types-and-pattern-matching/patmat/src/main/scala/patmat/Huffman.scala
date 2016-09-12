@@ -335,10 +335,12 @@ object Huffman {
     * the code table `table`.
     */
   def codeBits(table: CodeTable)(char: Char): List[Bit] = {
-    for (p <- table) {
-      if (p._1 == char) return p._2
-    }
-    throw new Exception("char not found")
+//    for (p <- table) {
+//      if (p._1 == char) return p._2
+//    }
+//    throw new Exception("char not found")
+//    refactor:
+    table.filter((code)=> code._1 == char).head._2
   }
 
   /**
