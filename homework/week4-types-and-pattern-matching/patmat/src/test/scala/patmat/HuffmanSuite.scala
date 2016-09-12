@@ -39,7 +39,7 @@ class HuffmanSuite extends FunSuite {
   }
 
   test("times") {
-    assert(times(List('x', 'a', 'b', 'a', 'b', 'a', 'c', 'd', 'd')) === List(('a', 3), ('b', 2), ('c', 1), ('d', 2), ('x', 1)))
+    assert(times(List('x', 'a', 'b', 'a', 'b', 'a', 'c', 'd', 'd')).sortBy(_._1) === List(('a', 3), ('b', 2), ('c', 1), ('d', 2), ('x', 1)).sortBy(_._1))
   }
 
   test("makeOrderedLeafList for some frequency table") {

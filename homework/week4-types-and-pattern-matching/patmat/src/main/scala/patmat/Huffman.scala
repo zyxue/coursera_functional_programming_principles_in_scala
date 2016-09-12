@@ -86,32 +86,41 @@ object Huffman {
     */
 
   def times(chars: List[Char]): List[(Char, Int)] = {
-    var res = List[(Char, Int)]()
+//    var res = List[(Char, Int)]()
+//
+//    val charsSorted = chars.sorted
+//
+//    var currentChar = charsSorted.head
+//    var count = 1
+//    var remained = charsSorted.tail
+//
+//    while (remained.nonEmpty) {
+//      val char = remained.head
+//
+//      if (char != currentChar) {
+//        res = res ::: List((currentChar, count))
+//        currentChar = char
+//        count = 1
+//      } else {
+//        count += 1
+//      }
+//
+//      remained = remained.tail
+//    }
+//
+//    // Add the count of last characters
+//    res = res ::: List((currentChar, count))
+//
+//    res
 
-    val charsSorted = chars.sorted
+//    refactor:
 
-    var currentChar = charsSorted.head
-    var count = 1
-    var remained = charsSorted.tail
-
-    while (remained.nonEmpty) {
-      val char = remained.head
-
-      if (char != currentChar) {
-        res = res ::: List((currentChar, count))
-        currentChar = char
-        count = 1
-      } else {
-        count += 1
+      def incr(acc:Map[Char, Int], c:Char) = {
+        val count = (acc.get(c)).getOrElse(0) + 1
+        acc + ((c, count))
       }
 
-      remained = remained.tail
-    }
-
-    // Add the count of last characters
-    res = res ::: List((currentChar, count))
-
-    res
+      (Map[Char, Int]() /: chars)(incr).iterator.toList
   }
 
   /**
