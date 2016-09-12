@@ -217,7 +217,7 @@ object Huffman {
     * frequencies from that text and creates a code tree based on them.
     */
   def createCodeTree(chars: List[Char]): CodeTree = {
-    until(singleton, combine)(makeOrderedLeafList(times(chars)))
+    until(singleton, combine)(makeOrderedLeafList(times(chars))).head
   }
 
 
