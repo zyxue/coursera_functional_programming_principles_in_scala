@@ -148,6 +148,8 @@ object Huffman {
     * Checks whether the list `trees` contains only one single code tree.
     */
   def singleton(trees: List[CodeTree]): Boolean = trees.length == 1
+//  trees.length is equivalent to trees.size
+//  http://stackoverflow.com/questions/22966705/scala-what-is-the-difference-between-size-and-length-of-a-seq
 
   /**
     * The parameter `trees` of this function is a list of code trees ordered
