@@ -39,7 +39,7 @@ object Huffman {
   def makeCodeTree(left: CodeTree, right: CodeTree) =
     Fork(left, right, chars(left) ::: chars(right), weight(left) + weight(right))
 
-  
+
   // Part 2: Generating Huffman trees
 
   /**
@@ -76,7 +76,35 @@ object Huffman {
    *       println("integer is  : "+ theInt)
    *   }
    */
-    def times(chars: List[Char]): List[(Char, Int)] = ???
+
+    def times(chars: List[Char]): List[(Char, Int)] = {
+      var res = List[(Char, Int)]()
+
+      val charsSorted = chars.sorted
+
+      var currentChar = charsSorted.head
+      var count = 1
+      var remained = charsSorted.tail
+
+      while (remained.nonEmpty) {
+        val char = remained.head
+
+        if (char != currentChar) {
+          res = res ::: List((currentChar, count))
+          currentChar = char
+          count = 1
+        } else {
+          count += 1
+        }
+
+        remained = remained.tail
+      }
+
+      // Add the count of last characters
+      res = res ::: List((currentChar, count))
+
+      res
+    }
   
   /**
    * Returns a list of `Leaf` nodes for a given frequency table `freqs`.
