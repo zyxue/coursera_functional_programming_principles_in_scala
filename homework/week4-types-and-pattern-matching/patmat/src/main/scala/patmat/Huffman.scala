@@ -201,13 +201,13 @@ object Huffman {
     */
   def until(isSingleton: List[CodeTree] => Boolean,
             doCombine: List[CodeTree] => List[CodeTree])
-           (trees: List[CodeTree]): CodeTree = {
+           (trees: List[CodeTree]): List[CodeTree] = {
     var res = trees
     while (!isSingleton(trees)) {
       res = doCombine(trees)
     }
 
-    res(0)
+    res
   }
 
   /**
