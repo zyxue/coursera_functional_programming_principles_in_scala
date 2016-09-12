@@ -29,13 +29,19 @@ object Huffman {
 
   // use pattern matching
   def weight(tree: CodeTree): Int = tree match {
-    case Fork(left, right, chars, weight) => weight
-    case Leaf(char, weight) => weight
+//    case Fork(left, right, chars, weight) => weight
+//    case Leaf(char, weight) => weight
+//    refactored:
+    case Fork(_, _, _, w) => w
+    case Leaf(_, w) => w
   }
 
   def chars(tree: CodeTree): List[Char] = tree match {
-    case Fork(left, right, chars, weight) => chars
-    case Leaf(char, weight) => List(char)
+//    case Fork(left, right, chars, weight) => chars
+//    case Leaf(char, weight) => List(char)
+//    refactored:
+    case Fork(_, _, cs, _) => cs
+    case Leaf(c, _) => List(c)
   }
 
   def makeCodeTree(left: CodeTree, right: CodeTree) =
