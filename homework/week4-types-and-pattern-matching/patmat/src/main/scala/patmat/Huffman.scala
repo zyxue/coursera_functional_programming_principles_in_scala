@@ -131,13 +131,17 @@ object Huffman {
     * of a leaf is the frequency of the character.
     */
   def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = {
-    val freqsSorted = freqs.sortBy(_._2)
-    var res = List[Leaf]()
-    for (p <- freqsSorted) {
-      res = res ::: List(Leaf(p._1, p._2))
-    }
+//    val freqsSorted = freqs.sortBy(_._2)
+//    var res = List[Leaf]()
+//    for (p <- freqsSorted) {
+//      res = res ::: List(Leaf(p._1, p._2))
+//    }
+//
+//    res
 
-    res
+//    refactor:
+
+    freqs.sortWith((f1,f2) => f1._2 < f2._2).map((f) => Leaf (f._1, f._2))
   }
 
   /**
