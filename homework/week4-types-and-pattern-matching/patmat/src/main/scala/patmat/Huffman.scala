@@ -293,26 +293,36 @@ object Huffman {
     * into a sequence of bits.
     */
   def encode(tree: CodeTree)(text: List[Char]): List[Bit] = {
+//
+//    def encodeOneChar(subtree: CodeTree, targetChar: Char, bits: List[Bit]): List[Bit] = subtree match {
+//      case Leaf(c, weight) => {
+//        bits
+//      }
+//
+//      case Fork(left, right, cs, weight) => {
+//        if (chars(left).contains(targetChar))
+//          encodeOneChar(left, targetChar, bits ::: List(0))
+//        else
+//          encodeOneChar(right, targetChar, bits ::: List(1))
+//      }
+//    }
+//
+//    var res = List[Bit]()
+//    for (c <- text) {
+//      res = res ::: encodeOneChar(tree, c, List[Bit]())
+//    }
+//
+//    res
 
-    def encodeOneChar(subtree: CodeTree, targetChar: Char, bits: List[Bit]): List[Bit] = subtree match {
-      case Leaf(c, weight) => {
-        bits
-      }
+//    refactor:
 
-      case Fork(left, right, cs, weight) => {
-        if (chars(left).contains(targetChar))
-          encodeOneChar(left, targetChar, bits ::: List(0))
-        else
-          encodeOneChar(right, targetChar, bits ::: List(1))
-      }
+    def lookup(tree: CodeTree)(c: Char): List[Bit] = tree match {
+      case Leaf(_, _) => List()
+      case Fork(left, right, _, _) if chars(left).contains(c) => 0 :: lookup(left)(c)
+      case Fork(left, right, _, _) => 1 :: lookup(right)(c)
     }
 
-    var res = List[Bit]()
-    for (c <- text) {
-      res = res ::: encodeOneChar(tree, c, List[Bit]())
-    }
-
-    res
+    text.flatMap(lookup(tree))
   }
 
   // Part 4b: Encoding using code table
