@@ -126,7 +126,7 @@ object Huffman {
   /**
    * Checks whether the list `trees` contains only one single code tree.
    */
-    def singleton(trees: List[CodeTree]): Boolean = ???
+    def singleton(trees: List[CodeTree]): Boolean = trees.length == 1
   
   /**
    * The parameter `trees` of this function is a list of code trees ordered
@@ -140,7 +140,18 @@ object Huffman {
    * If `trees` is a list of less than two elements, that list should be returned
    * unchanged.
    */
-    def combine(trees: List[CodeTree]): List[CodeTree] = ???
+
+    def combine(trees: List[CodeTree]): List[CodeTree] = {
+      println(trees.length)
+      if (trees.length <= 2) trees
+      else {
+        val left = trees(0)
+        val right = trees(1)
+        val fork = Fork(left, right, chars(left) ::: chars(right),
+          weight(left) + weight(right))
+        combine((fork :: trees.drop(1).drop(1)).sortBy(weight))
+      }
+    }
   
   /**
    * This function will be called in the following way:
@@ -159,7 +170,16 @@ object Huffman {
    *    the example invocation. Also define the return type of the `until` function.
    *  - try to find sensible parameter names for `xxx`, `yyy` and `zzz`.
    */
-    def until(xxx: ???, yyy: ???)(zzz: ???): ??? = ???
+    def until(isSingleton: List[CodeTree] => Boolean,
+              doCombine: List[CodeTree] => List[CodeTree])
+             (trees: List[CodeTree]): List[CodeTree] = {
+    var res = trees
+    while (!isSingleton(trees)) {
+      res= doCombine(trees)
+    }
+
+    res
+  }
   
   /**
    * This function creates a code tree which is optimal to encode the text `chars`.
