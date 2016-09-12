@@ -172,13 +172,13 @@ object Huffman {
    */
     def until(isSingleton: List[CodeTree] => Boolean,
               doCombine: List[CodeTree] => List[CodeTree])
-             (trees: List[CodeTree]): List[CodeTree] = {
+             (trees: List[CodeTree]): CodeTree = {
     var res = trees
     while (!isSingleton(trees)) {
-      res= doCombine(trees)
+      res = doCombine(trees)
     }
 
-    res
+    res(0)
   }
   
   /**
@@ -187,7 +187,9 @@ object Huffman {
    * The parameter `chars` is an arbitrary text. This function extracts the character
    * frequencies from that text and creates a code tree based on them.
    */
-    def createCodeTree(chars: List[Char]): CodeTree = ???
+    def createCodeTree(chars: List[Char]): CodeTree = {
+    until(singleton, combine)(makeOrderedLeafList(times(chars)))
+  }
   
 
   // Part 3: Decoding
