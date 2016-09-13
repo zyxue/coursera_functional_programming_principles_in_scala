@@ -199,15 +199,24 @@ object Huffman {
     * the example invocation. Also define the return type of the `until` function.
     * - try to find sensible parameter names for `xxx`, `yyy` and `zzz`.
     */
-  def until(isSingleton: List[CodeTree] => Boolean,
-            doCombine: List[CodeTree] => List[CodeTree])
-           (trees: List[CodeTree]): List[CodeTree] = {
-    var res = trees
-    while (!isSingleton(trees)) {
-      res = doCombine(trees)
-    }
+//  def until(isSingleton: List[CodeTree] => Boolean,
+//            doCombine: List[CodeTree] => List[CodeTree])
+//           (trees: List[CodeTree]): List[CodeTree] = {
+//    var res = trees
+//    while (!isSingleton(trees)) {
+//      res = doCombine(trees)
+//    }
+//
+//    res
 
-    res
+//    fix:
+
+  def until(p: List[CodeTree]=>Boolean,
+            f: List[CodeTree]=>List[CodeTree])
+           (trees: List[CodeTree]): List[CodeTree] = {
+    if (p(trees)) trees
+    else until(p, f)( f(trees) )
+
   }
 
   /**
