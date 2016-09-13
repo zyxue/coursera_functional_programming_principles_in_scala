@@ -1,5 +1,7 @@
 package patmat
 
+//https://github.com/tonyskn/coursera-scala/blob/master/w4-patmat/src/main/scala/patmat/Huffman.scala
+
 import common._
 
 /**
