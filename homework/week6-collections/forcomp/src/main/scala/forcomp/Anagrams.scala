@@ -2,6 +2,7 @@ package forcomp
 
 import scala.collection.immutable._
 
+// reference: https://github.com/tonyskn/coursera-scala/blob/master/w6-forcomp/src/main/scala/forcomp/Anagrams.scala
 
 object Anagrams {
 
@@ -159,5 +160,18 @@ object Anagrams {
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
+    def iter(occurrences: Occurrences): List[Sentence] = {
+      if (occurrences.isEmpty) List(Nil)
+      else for {
+        combination <- combinations( occurrences )
+        word <- dictionaryByOccurrences getOrElse (combination, Nil)
+        sentence <- iter( subtract(occurrences, wordOccurrences(word)) )
+        if !combination.isEmpty
+      } yield word :: sentence
+    }
+
+    iter( sentenceOccurrences(sentence) )
+  }
+
 }
