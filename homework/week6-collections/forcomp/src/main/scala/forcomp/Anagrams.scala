@@ -91,8 +91,8 @@ object Anagrams {
    *  in the example above could have been displayed in some other order.
    */
   def combinations(occurrences: Occurrences): List[Occurrences] =
-    (occurrences foldRight List[Occurrences](Nil)) {
-      case ((ch,tm), acc) => {
+    occurrences.foldRight(List[Occurrences](Nil)) {
+      case ((ch, tm), acc) => {
         acc ++ (
           for { comb <- acc; n <- 1 to tm }
             yield (ch, n) :: comb
@@ -112,7 +112,8 @@ object Anagrams {
    *  and has no zero-entries.
    */
   def subtract(x: Occurrences, y: Occurrences): Occurrences = {
-    (y foldLeft SortedMap[Char,Int]() ++ x){ case (map, (ch, tm)) => {
+    // using foldLeft is pretty neat! zyxue
+    y.foldLeft(SortedMap[Char, Int]() ++ x){ case (map, (ch, tm)) => {
       val newTm = map(ch) - tm
       if (newTm != 0) map updated (ch, newTm)
       else map - ch
